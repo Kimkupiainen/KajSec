@@ -1,0 +1,44 @@
+name: Update Events JSON
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # every day at 06:00 UTC
+  workflow_dispatch: # allows manual trigger
+
+jobs:
+  update-events:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pandas
+
+      - name: Download and convert Google Sheets CSV to JSON
+        run: |
+          curl -L -o sheet.csv "https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pubhtml?output=csv"
+          python -c "
+import pandas as pd
+from datetime import datetime
+df = pd.read_csv('sheet.csv')
+df = df.dropna(subset=['Date'])
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+df = df[df['Date'] >= pd.to_datetime(datetime.now().date())]
+df = df.sort_values(by='Date')
+df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
+df.to_json('assets/data/events.json', orient='records', indent=2)
+"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/events.json
+          git commit -m "Update events.json from Google Sheets" || echo "No changes"
+          git push
