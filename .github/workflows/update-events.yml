@@ -27,29 +27,24 @@ jobs:
         run: |
           curl -L -o sheet.csv "https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv"
 
-          echo '
-import pandas as pd
-from datetime import datetime
+          echo "import pandas as pd" > convert.py
+          echo "from datetime import datetime" >> convert.py
+          echo "print('Reading sheet.csv...')" >> convert.py
+          echo "df = pd.read_csv('sheet.csv')" >> convert.py
+          echo "print('Original rows:', len(df))" >> convert.py
+          echo "df = df.dropna(subset=['Date'])" >> convert.py
+          echo "df['Date'] = pd.to_datetime(df['Date'], errors='coerce')" >> convert.py
+          echo "print('After parsing dates:', len(df))" >> convert.py
+          echo "df = df[df['Date'].notna()]" >> convert.py
+          echo "df = df[df['Date'] >= pd.to_datetime(datetime.now().date())]" >> convert.py
+          echo "print('After filtering past dates:', len(df))" >> convert.py
+          echo "df = df.sort_values(by='Date')" >> convert.py
+          echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')" >> convert.py
+          echo "print('Saving to events.json...')" >> convert.py
+          echo "df.to_json('assets/data/events.json', orient='records', indent=2)" >> convert.py
+          echo "print('Done.')" >> convert.py
 
-print("Reading sheet.csv...")
-df = pd.read_csv("sheet.csv")
-print("Original rows:", len(df))
-
-df = df.dropna(subset=["Date"])
-df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
-print("After parsing dates:", len(df))
-
-df = df[df["Date"].notna()]
-df = df[df["Date"] >= pd.to_datetime(datetime.now().date())]
-print("After filtering past dates:", len(df))
-
-df = df.sort_values(by="Date")
-df["Date"] = df["Date"].dt.strftime("%Y-%m-%d")
-
-print("Saving to events.json...")
-df.to_json("assets/data/events.json", orient="records", indent=2)
-print("Done.")
-' > convert.py
+          python convert.py
 
       - name: Commit and push changes
         run: |
