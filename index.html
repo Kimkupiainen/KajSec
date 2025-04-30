@@ -232,19 +232,6 @@
   <script src="assets/js/matrix.js"></script>
 
 <script>
-  function escapeHTML(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  function renderMarkdownSafe(text = '') {
-    const safe = escapeHTML(text);
-    return safe
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>');
-  }
-
   async function loadEvents() {
     const response = await fetch(`assets/data/events.json?t=${new Date().getTime()}`);
     const events = await response.json();
@@ -257,19 +244,60 @@
       .sort((a, b) => a.Date.localeCompare(b.Date));
 
     if (upcoming.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4">No upcoming events found.</td></tr>';
+      const row = document.createElement('tr');
+      const cell = document.createElement('td');
+      cell.colSpan = 4;
+      cell.textContent = "No upcoming events found.";
+      row.appendChild(cell);
+      tbody.appendChild(row);
     } else {
       upcoming.forEach(event => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${escapeHTML(event["Date"])}</td>
-          <td>${escapeHTML(event["Event Name"])}</td>
-          <td>${escapeHTML(event["Location"])}</td>
-          <td>${renderMarkdownSafe(event["Description"])}</td>
-        `;
+
+        const tdDate = document.createElement('td');
+        tdDate.textContent = event["Date"];
+
+        const tdName = document.createElement('td');
+        tdName.textContent = event["Event Name"];
+
+        const tdLocation = document.createElement('td');
+        tdLocation.textContent = event["Location"];
+
+        const tdDescription = document.createElement('td');
+        tdDescription.appendChild(renderMarkdownSafe(event["Description"]));
+
+        tr.appendChild(tdDate);
+        tr.appendChild(tdName);
+        tr.appendChild(tdLocation);
+        tr.appendChild(tdDescription);
+
         tbody.appendChild(tr);
       });
     }
+  }
+
+  // Lightweight markdown renderer returning real DOM nodes
+  function renderMarkdownSafe(text = '') {
+    const container = document.createElement('span');
+    let current = '';
+    let mode = 'text'; // can be 'text', 'bold', 'italic'
+    let parts = text.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+
+    parts.forEach(part => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        const strong = document.createElement('strong');
+        strong.textContent = part.slice(2, -2);
+        container.appendChild(strong);
+      } else if (part.startsWith('*') && part.endsWith('*')) {
+        const em = document.createElement('em');
+        em.textContent = part.slice(1, -1);
+        container.appendChild(em);
+      } else {
+        container.appendChild(document.createTextNode(part));
+      }
+    });
+
+    return container;
   }
 
   document.addEventListener('DOMContentLoaded', loadEvents);
