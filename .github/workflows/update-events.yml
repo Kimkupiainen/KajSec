@@ -24,17 +24,16 @@ jobs:
       - name: Download and convert Google Sheets CSV to JSON
         run: |
           curl -L -o sheet.csv "https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv"
-          echo 'import pandas as pd
-from datetime import datetime
-
-df = pd.read_csv("sheet.csv")
-df = df.dropna(subset=["Date"])
-df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
-df = df[df["Date"] >= pd.to_datetime(datetime.now().date())]
-df = df.sort_values(by="Date")
-df["Date"] = df["Date"].dt.strftime("%Y-%m-%d")
-df.to_json("assets/data/events.json", orient="records", indent=2)
-' > convert.py
+          echo "import pandas as pd\n\
+from datetime import datetime\n\
+\n\
+df = pd.read_csv('sheet.csv')\n\
+df = df.dropna(subset=['Date'])\n\
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce')\n\
+df = df[df['Date'] >= pd.to_datetime(datetime.now().date())]\n\
+df = df.sort_values(by='Date')\n\
+df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')\n\
+df.to_json('assets/data/events.json', orient='records', indent=2)" > convert.py
           python convert.py
 
       - name: Commit and push changes
