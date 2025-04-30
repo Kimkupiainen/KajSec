@@ -31,6 +31,7 @@ jobs:
             echo "from datetime import datetime" >> convert.py
             echo "print('Reading sheet.csv...')" >> convert.py
             echo "df = pd.read_csv('sheet.csv')" >> convert.py
+            cat sheet.csv
             echo "print('Original rows:', len(df))" >> convert.py
             echo "df = df.dropna(how='all')" >> convert.py  # Drop only fully empty rows
             echo "df['Date'] = pd.to_datetime(df['Date'], errors='coerce')" >> convert.py
@@ -40,6 +41,7 @@ jobs:
             echo "print('Saving to events.json...')" >> convert.py
             echo "df.to_json('assets/data/events.json', orient='records', indent=2)" >> convert.py
             echo "print('Done.')" >> convert.py
+            echo "print(df.to_string())" >> convert.py
 
           python convert.py
 
