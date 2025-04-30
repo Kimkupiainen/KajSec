@@ -1,20 +1,14 @@
 [
   {
-    "Date": "2025-05-10",
-    "Event Name": "Monthly Meetup",
-    "Location": "Kajaani HUB",
-    "Description": "Grab pizza and listen to lightning talks on *Wireshark* and **threat modeling**."
+    "Date":"2025-08-05",
+    "Event Name":"Monthly Meetup",
+    "Location":"Lori",
+    "Description":"Talks + pizza"
   },
   {
-    "Date": "2025-06-01",
-    "Event Name": "CTF Training",
-    "Location": "Online (Discord)",
-    "Description": "Join us for a walkthrough on solving **web-based CTFs**."
-  },
-  {
-    "Date": "2024-12-01",
-    "Event Name": "Old Event",
-    "Location": "Somewhere",
-    "Description": "This will be filtered out."
+    "Date":"2025-10-05",
+    "Event Name":"Cyber CTF Challenge",
+    "Location":"Online (Discord)",
+    "Description":"Hands-on hacking competition"
   }
 ]
