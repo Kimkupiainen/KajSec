@@ -1078,7 +1078,7 @@ section {
 }
 
 #event-table {
-  background: rgba(255, 255, 255, 0.95); /* solid white-ish */
+  background: rgba(0, 0, 0, 0.40); /* solid white-ish */
   border-radius: 12px;
   overflow: hidden;
   margin: 20px auto;
@@ -1101,7 +1101,7 @@ section {
 }
 
 #event-table td {
-  background-color: white;
+  background-color: black;
 }
 
 #event-table tr:not(:last-child) td {
