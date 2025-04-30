@@ -1078,26 +1078,33 @@ section {
 }
 
 #event-table {
-  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95); /* solid white-ish */
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px auto;
+  width: 90%;
   max-width: 900px;
-  background: rgba(255, 255, 255, 0.05);
-  border-collapse: collapse;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-#event-table th,
-#event-table td {
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+#event-table th, #event-table td {
+  padding: 16px;
+  text-align: left;
+  color: #222;
 }
 
 #event-table th {
-  background-color: rgba(255, 255, 255, 0.15);
-  font-weight: 600;
-  text-align: center;
+  background-color: #f0f0f0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 #event-table td {
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
+  background-color: white;
 }
+
+#event-table tr:not(:last-child) td {
+  border-bottom: 1px solid #ddd;
+}
+

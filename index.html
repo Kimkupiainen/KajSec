@@ -182,10 +182,11 @@
     const events = await response.json();
     const tbody = document.querySelector('#event-table tbody');
 
-    const today = new Date();
-    const upcoming = events
-      .filter(event => new Date(event.Date) >= today)
-      .sort((a, b) => new Date(a.Date) - new Date(b.Date));
+	const todayISO = new Date().toISOString().split("T")[0]; // e.g. 2025-05-04
+
+	const upcoming = events
+	  .filter(event => event.Date >= todayISO)
+	  .sort((a, b) => a.Date.localeCompare(b.Date));
 
     if (upcoming.length === 0) {
       tbody.innerHTML = '<tr><td colspan="4">No upcoming events found.</td></tr>';
