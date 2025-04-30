@@ -24,7 +24,7 @@ jobs:
       - name: Download and convert Google Sheets CSV to JSON
         run: |
           curl -L -o sheet.csv "https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv"
-          python <<EOF
+          cat <<EOF > convert.py
 import pandas as pd
 from datetime import datetime
 
@@ -36,6 +36,7 @@ df = df.sort_values(by='Date')
 df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
 df.to_json('assets/data/events.json', orient='records', indent=2)
 EOF
+          python convert.py
 
       - name: Commit and push changes
         run: |
