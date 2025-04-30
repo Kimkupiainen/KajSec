@@ -1064,12 +1064,7 @@ section {
 /*--------------------------------------------------------------
 # Events Section
 --------------------------------------------------------------*/
-.events {
-  background: linear-gradient(rgba(0, 13, 51, 0.8), rgba(0, 13, 51, 0.8)), url("../img/cta-bg2.jpg") center center no-repeat;
-  background-size: cover;
-  padding: 60px 0;
-  color: #fff;
-}
+
 
 .events h3 {
   font-size: 28px;
