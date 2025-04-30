@@ -1078,33 +1078,43 @@ section {
 }
 
 #event-table {
-  background: rgba(0, 0, 0, 0.40); /* solid white-ish */
+  background: rgba(47, 77, 90, 0.8); /* deep blue-green, matching #2f4d5a */
   border-radius: 12px;
   overflow: hidden;
   margin: 20px auto;
   width: 90%;
   max-width: 900px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-#event-table th, #event-table td {
-  padding: 16px;
-  text-align: left;
-  color: #222;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  color: #fff;
 }
 
 #event-table th {
-  background-color: #f0f0f0;
+  background-color: #ff00ff; /* KajSec magenta */
+  color: #fff;
   font-weight: 700;
+  padding: 16px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: left;
 }
 
 #event-table td {
-  background-color: black;
+  background-color: rgba(0, 13, 51, 0.6); /* dark bluish transparent */
+  color: #ffffff;
+  padding: 16px;
+  text-align: left;
 }
 
 #event-table tr:not(:last-child) td {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#event-table td strong {
+  color: #8ec4dd; /* cyan highlight */
+}
+
+#event-table td em {
+  color: #67b0d1; /* alternate cyan */
+}
 }
 
