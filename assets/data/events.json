@@ -1,21 +1,15 @@
 [
   {
     "Date":"2025-03-17 17:00",
-    "Event Name":"Old date",
-    "Location":"Gone",
-    "Description":"12345"
+    "Event Name":"Past event date",
+    "Location":"redacted",
+    "Description":"No"
   },
   {
     "Date":"2025-04-30 19:30",
     "Event Name":"Test event",
     "Location":"K1:s house",
     "Description":"Only for K1"
-  },
-  {
-    "Date":"2025-05-01 19:45",
-    "Event Name":"Test 2 for test",
-    "Location":"Somewhere",
-    "Description":"Yes"
   },
   {
     "Date":"2025-05-08 18:00",
