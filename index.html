@@ -232,16 +232,29 @@
   <script src="assets/js/matrix.js"></script>
 
 <script>
+  function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function renderMarkdownSafe(text = '') {
+    const safe = escapeHTML(text);
+    return safe
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>');
+  }
+
   async function loadEvents() {
     const response = await fetch(`assets/data/events.json?t=${new Date().getTime()}`);
     const events = await response.json();
     const tbody = document.querySelector('#event-table tbody');
 
-	const todayISO = new Date().toISOString().split("T")[0]; // e.g. 2025-05-04
+    const todayISO = new Date().toISOString().split("T")[0];
 
-	const upcoming = events
-	  .filter(event => event.Date >= todayISO)
-	  .sort((a, b) => a.Date.localeCompare(b.Date));
+    const upcoming = events
+      .filter(event => event.Date >= todayISO)
+      .sort((a, b) => a.Date.localeCompare(b.Date));
 
     if (upcoming.length === 0) {
       tbody.innerHTML = '<tr><td colspan="4">No upcoming events found.</td></tr>';
@@ -249,21 +262,14 @@
       upcoming.forEach(event => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${event["Date"]}</td>
-          <td>${event["Event Name"]}</td>
-          <td>${event["Location"]}</td>
-          <td>${renderMarkdown(event["Description"])}</td>
+          <td>${escapeHTML(event["Date"])}</td>
+          <td>${escapeHTML(event["Event Name"])}</td>
+          <td>${escapeHTML(event["Location"])}</td>
+          <td>${renderMarkdownSafe(event["Description"])}</td>
         `;
         tbody.appendChild(tr);
       });
     }
-  }
-
-  // Simple markdown parser: **bold**, *italic*
-  function renderMarkdown(text = '') {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>');
   }
 
   document.addEventListener('DOMContentLoaded', loadEvents);
