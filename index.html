@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link rel="icon" type="image/png" href="assets/img/vouho2.png">
 
   <title>KAJSEC RY</title>
   <meta content="" name="description">
@@ -30,7 +31,13 @@
 </head>
 
 <body>
-
+<div id="preloader">
+  <div id="vanta-bg-preloader"></div>
+  <div class="loader-wrapper">
+    <div class="spinner"></div>
+    <div class="loader-text">Loading <span id="loader-percent">0</span>%</div>
+  </div>
+</div>
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top header-transparent">
     <div class="container d-flex align-items-center justify-content-between position-relative">
@@ -246,13 +253,50 @@
     minHeight: 200.00,
     minWidth: 200.00,
     scale: 1.0,
-    scaleMobile: 1.0,
+    scaleMobile: 0.2,
     color: 0x67b0d1,
     backgroundColor: 0xf7f7f7,
     points: 10.0,
     maxDistance: 20.0,
     spacing: 15.0
   });
+</script>
+<!-- Include Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+<!-- Include Vanta.js NET effect -->
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+<!-- Initialize Vanta.js -->
+<script>
+  VANTA.NET({
+    el: "#vanta-bg-preloader",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    color: 0xffffff, // White nodes
+    backgroundColor: 0x000000 // Black background
+  })
+</script>
+<script>
+  let percent = 0;
+  const loader = document.getElementById('loader-percent');
+  const preloader = document.getElementById('preloader');
+
+  const interval = setInterval(() => {
+    percent += Math.floor(Math.random() * 10) + 3;
+    if (percent >= 100) {
+      percent = 100;
+      clearInterval(interval);
+      preloader.style.opacity = '0';
+      setTimeout(() => preloader.style.display = 'none', 500);
+    }
+    loader.textContent = percent;
+  }, 80);
 </script>
 
 
