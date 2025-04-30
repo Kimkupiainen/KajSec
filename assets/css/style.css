@@ -1064,7 +1064,13 @@ section {
 /*--------------------------------------------------------------
 # Events Section
 --------------------------------------------------------------*/
-
+.iframe-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 2px solid #2f4d5a;
+  margin-top: 20px;
+}
 
 .events h3 {
   font-size: 28px;
