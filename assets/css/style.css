@@ -1190,3 +1190,93 @@ section {
   transform: translateY(-4px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
+
+/* ================================
+   MOBILE OPTIMIZATION PATCH (≤768px)
+   ================================ */
+@media (max-width: 768px) {
+
+  /* Hero video: disable on mobile to save bandwidth */
+  #hero video {
+    display: none;
+  }
+
+  /* Reduce font sizes for readability */
+  h1, h2, h3 {
+    font-size: 1.5rem;
+  }
+
+  .loader-text {
+    font-size: 1rem;
+  }
+
+  /* Smaller icons */
+  .icon-box i {
+    font-size: 28px;
+  }
+
+  /* Simplify visual effects */
+  .icon-box {
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  /* Adjust mascot image */
+  .mascot-img {
+    max-width: 80%;
+    height: auto;
+  }
+
+  /* Disable Vanta.js background in preloader for mobile performance */
+  #vanta-bg-preloader {
+    display: none !important;
+  }
+
+  /* Disable backdrop blur if any */
+  .icon-box {
+    background: rgba(255, 255, 255, 0.05); /* fallback */
+  }
+
+  /* Hide unnecessary dropdowns or mega menus if they exist */
+  .navbar .dropdown ul,
+  .navbar .megamenu ul {
+    display: none !important;
+  }
+
+  /* Reduce header padding */
+  #header {
+    padding: 10px 0;
+  }
+
+  /* Fix mobile menu size */
+  .navbar-mobile ul {
+    top: 70px;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  /* Event table: enable horizontal scrolling */
+  #event-table {
+    overflow-x: auto;
+    display: block;
+  }
+
+  #event-table thead {
+    display: none;
+  }
+
+  #event-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  #event-table tr {
+    display: block;
+    margin-bottom: 1rem;
+    background-color: rgba(0,13,51,0.6);
+    border-radius: 8px;
+  }
+}
