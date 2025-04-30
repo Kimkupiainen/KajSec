@@ -65,13 +65,14 @@
 	
   </section><!-- End Hero -->
 
-  <main id="main">
+<main id="main">
 <!-- ======= About Section ======= -->
-<section id="about" class="about">
-  <div class="container">
-
+<section id="about" class="about" style="position: relative; z-index:1">
+<div id="vanta-bg" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:-1;"></div>
+  <div class="container position-relative">
     <div class="row no-gutters">
-      <!-- Left Text Content -->
+      
+      <!-- Left Text Column -->
       <div class="content col-xl-6 d-flex align-items-stretch" data-aos="fade-up">
         <div class="content">
           <h3>What is KAJSEC?</h3>
@@ -84,29 +85,35 @@
         </div>
       </div>
 
-      <!-- Right Image and Icon Boxes -->
+      <!-- Right Image + Icons Column -->
       <div class="col-xl-6 d-flex align-items-stretch" data-aos="fade-left">
         <div class="d-flex flex-column justify-content-center align-items-center w-100">
+          
+          <!-- Mascot image on top -->
+          <img src="assets/img/vouho2.png" alt="Cyber mascot" class="mascot-img mb-4">
 
-            <img src="assets/img/vouho.png" alt="Cyber mascot" style="max-width: 100%; border-radius: 16px;">
+
+            </div>
           </div>
+        </div>
+      
+		          <!-- Icon Boxes -->
           <div class="row w-100 px-3">
             <div class="col-md-6 icon-box text-center" data-aos="zoom-in" data-aos-delay="100">
               <i class="bi bi-terminal" style="font-size: 2rem; color: #67b0d1;"></i>
               <h4>Hands-On Learning</h4>
               <p>Join CTFs, lab experiments and cybersecurity workshops.</p>
             </div>
-
             <div class="col-md-6 icon-box text-center" data-aos="zoom-in" data-aos-delay="200">
               <i class="bi bi-people-fill" style="font-size: 2rem; color: #67b0d1;"></i>
               <h4>Supportive Community</h4>
               <p>Meet local professionals and hobbyists passionate about infosec.</p>
             </div>
-          </div>
-        </div>
-      </div>
+            <div class="col-md-12 icon-box text-center mt-4" data-aos="zoom-in" data-aos-delay="300">
+              <i class="bi bi-lightbulb-fill" style="font-size: 2rem; color: #67b0d1;"></i>
+              <h4>Grow Your Potential</h4>
+              <p>Get inspired, level up your skills, and explore infosec careers or creative projects.</p>
     </div>
-
   </div>
 </section><!-- End About Section -->
 
@@ -191,6 +198,8 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/matrix.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
 <script>
   async function loadEvents() {
     const response = await fetch(`assets/data/events.json?t=${new Date().getTime()}`);
@@ -228,7 +237,23 @@
 
   document.addEventListener('DOMContentLoaded', loadEvents);
 </script>
-
+<script>
+  VANTA.NET({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.0,
+    scaleMobile: 1.0,
+    color: 0x67b0d1,
+    backgroundColor: 0xf7f7f7,
+    points: 10.0,
+    maxDistance: 20.0,
+    spacing: 15.0
+  });
+</script>
 
 
 </body>
