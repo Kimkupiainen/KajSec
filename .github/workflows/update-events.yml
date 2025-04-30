@@ -3,7 +3,7 @@ name: Update Events JSON
 on:
   schedule:
     - cron: '*/5 * * * *'  # every 5 minutes
-  workflow_dispatch:       # manual trigger
+  workflow_dispatch:
 
 jobs:
   update-events:
@@ -19,12 +19,12 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install pandas
+        run: python -m pip install pandas
 
       - name: Download and convert Google Sheets CSV to JSON
         run: |
           curl -L -o sheet.csv "https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv"
-          python3 <<EOF
+          python <<EOF
 import pandas as pd
 from datetime import datetime
 
