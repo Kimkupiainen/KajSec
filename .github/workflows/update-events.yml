@@ -34,7 +34,7 @@ jobs:
             cat sheet.csv
             echo "print('Original rows:', len(df))" >> convert.py
             echo "df = df.dropna(how='all')" >> convert.py  # Drop only fully empty rows
-            echo "df['Date'] = pd.to_datetime(df['Date'], errors='coerce')" >> convert.py
+            echo "df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')" >> convert.py
             echo "df = df[df['Date'].notna()]" >> convert.py  # Keep rows with valid dates
             echo "df = df.sort_values(by='Date')" >> convert.py
             echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M')" >> convert.py
