@@ -33,9 +33,9 @@ jobs:
           echo "df = pd.read_csv('sheet.csv')" >> convert.py
           echo "df = df.dropna(subset=['Date'])" >> convert.py
           echo "df['Date'] = pd.to_datetime(df['Date'], errors='coerce')" >> convert.py
-          echo "df = df[df['Date'] >= pd.to_datetime(datetime.now().date())]" >> convert.py
+          echo "df = df[df['Date'] >= pd.to_datetime(datetime.now())]" >> convert.py
           echo "df = df.sort_values(by='Date')" >> convert.py
-          echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')" >> convert.py
+          echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M')" >> convert.py
           echo "df.to_json('assets/data/events.json', orient='records', indent=2)" >> convert.py
 
           python convert.py
