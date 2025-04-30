@@ -22,5 +22,11 @@
     "Event Name":"Cyber CTF Challenge",
     "Location":"Online (Discord)",
     "Description":"Hands-on hacking competition"
+  },
+  {
+    "Date":"2025-05-28 18:00",
+    "Event Name":"KajSec goes to Savo",
+    "Location":"Kuopio, Savonia Kampussyd\u00e4n, Microkatu 1D",
+    "Description":"Pohjois-Savon suurin tietoturvatapahtuma"
   }
 ]
