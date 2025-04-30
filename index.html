@@ -303,38 +303,40 @@
   document.addEventListener('DOMContentLoaded', loadEvents);
 </script>
 <script>
-  VANTA.NET({
-    el: "#vanta-bg",
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.0,
-    scaleMobile: 0.2,
-    color: 0x67b0d1,
-    backgroundColor: 0xf7f7f7,
-    points: 10.0,
-    maxDistance: 20.0,
-    spacing: 15.0
-  });
+  if (window.innerWidth >= 768) {
+    VANTA.NET({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 0.2,
+      color: 0x67b0d1,
+      backgroundColor: 0xf7f7f7,
+      points: 10.0,
+      maxDistance: 20.0,
+      spacing: 15.0
+    });
+  }
 </script>
 
-
-<!-- Initialize Vanta.js -->
 <script>
-  VANTA.NET({
-    el: "#vanta-bg-preloader",
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-    color: 0xffffff, // White nodes
-    backgroundColor: 0x000000 // Black background
-  })
+  if (window.innerWidth >= 768) {
+    VANTA.NET({
+      el: "#vanta-bg-preloader",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0xffffff,
+      backgroundColor: 0x000000
+    });
+  }
 </script>
 <script>
   let percent = 0;
