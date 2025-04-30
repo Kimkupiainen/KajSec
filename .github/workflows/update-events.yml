@@ -2,11 +2,8 @@ name: Update Events JSON
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Every 5 minutes
+    - cron: '*/5 * * * *'
   workflow_dispatch:
-
-permissions:
-  contents: write  # ✅ Needed for git push
 
 jobs:
   update-events:
@@ -30,24 +27,21 @@ jobs:
 
           echo "import pandas as pd" > convert.py
           echo "from datetime import datetime" >> convert.py
-          echo "df = pd.read_csv('sheet.csv', encoding='utf-8-sig')" >> convert.py
-          echo "print('CSV Loaded:', df.shape)" >> convert.py
+          echo "df = pd.read_csv('sheet.csv')" >> convert.py
           echo "df = df.dropna(subset=['Date'])" >> convert.py
           echo "df['Date'] = pd.to_datetime(df['Date'], errors='coerce')" >> convert.py
-          echo "df = df[df['Date'] >= pd.to_datetime(datetime.now())]" >> convert.py
+          echo "df = df[df['Date'] >= pd.to_datetime(datetime.now().date())]" >> convert.py
           echo "df = df.sort_values(by='Date')" >> convert.py
-          echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M')" >> convert.py
+          echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')" >> convert.py
           echo "df.to_json('assets/data/events.json', orient='records', indent=2)" >> convert.py
 
           python convert.py
 
       - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 🔐 GitHub-provided token
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase
+          git pull
           git add assets/data/events.json
           git commit -m "Update events.json from Google Sheets" || echo "No changes"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
+          git push
