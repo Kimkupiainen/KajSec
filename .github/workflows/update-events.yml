@@ -30,7 +30,8 @@ jobs:
 
           echo "import pandas as pd" > convert.py
           echo "from datetime import datetime" >> convert.py
-          echo "df = pd.read_csv('sheet.csv')" >> convert.py
+          echo "df = pd.read_csv('sheet.csv', encoding='utf-8-sig')" >> convert.py
+          echo "print('CSV Loaded:', df.shape)" >> convert.py
           echo "df = df.dropna(subset=['Date'])" >> convert.py
           echo "df['Date'] = pd.to_datetime(df['Date'], errors='coerce')" >> convert.py
           echo "df = df[df['Date'] >= pd.to_datetime(datetime.now())]" >> convert.py
