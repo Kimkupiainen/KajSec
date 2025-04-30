@@ -892,7 +892,235 @@ section {
 .cta .cta-btn:hover {
   border-color: #fff;
 }
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
+    .image-container img {
+        width: 100%;
+        height: auto;
+    }
+
+
+
+.discord-button {
+  background-color: #5865F2;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.3s ease;
+}
+
+.discord-button:hover {
+  background-color: #4752c4;
+}
+
+.icon-wrapper {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.icon.terminal {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.icon.discord {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.discord-button:hover .icon.terminal {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.discord-button:hover .icon.discord {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/*--------------------------------------------------------------
+# Events Section
+--------------------------------------------------------------*/
+.iframe-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  border: 2px solid #2f4d5a;
+  margin-top: 20px;
+}
+
+.events h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+#event-table {
+  background: rgba(47, 77, 90, 0.8); /* deep blue-green, matching #2f4d5a */
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 900px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+#event-table th {
+  background-color: #ff00ff; /* KajSec magenta */
+  color: #fff;
+  font-weight: 700;
+  padding: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+#event-table td {
+  background-color: rgba(0, 13, 51, 0.6); /* dark bluish transparent */
+  color: #ffffff;
+  padding: 16px;
+  text-align: left;
+}
+
+#event-table tr:not(:last-child) td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#event-table td strong {
+  color: #8ec4dd; /* cyan highlight */
+}
+
+#event-table td em {
+  color: #67b0d1; /* alternate cyan */
+}
+}
+
+.mascot-img {
+  max-width: 10%;
+  height: 20%;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.icon-box {
+  background: #ffffff10;
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   MOBILE OPTIMIZATION PATCH (≤768px)
+   ================================ */
+@media (max-width: 768px) {
+
+  /* Hero video: disable on mobile to save bandwidth */
+  #hero video {
+    display: none;
+  }
+
+  /* Reduce font sizes for readability */
+  h1, h2, h3 {
+    font-size: 1.5rem;
+  }
+
+  .loader-text {
+    font-size: 1rem;
+  }
+
+  /* Smaller icons */
+  .icon-box i {
+    font-size: 28px;
+  }
+
+  /* Simplify visual effects */
+  .icon-box {
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  /* Adjust mascot image */
+  .mascot-img {
+    max-width: 80%;
+    height: auto;
+  }
+
+  /* Disable Vanta.js background in preloader for mobile performance */
+  #vanta-bg-preloader {
+    display: none !important;
+  }
+
+  /* Disable backdrop blur if any */
+  .icon-box {
+    background: rgba(255, 255, 255, 0.05); /* fallback */
+  }
+
+  /* Hide unnecessary dropdowns or mega menus if they exist */
+  .navbar .dropdown ul,
+  .navbar .megamenu ul {
+    display: none !important;
+  }
+
+  /* Reduce header padding */
+  #header {
+    padding: 10px 0;
+  }
+
+  /* Fix mobile menu size */
+  .navbar-mobile ul {
+    top: 70px;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  /* Event table: enable horizontal scrolling */
+  #event-table {
+    overflow-x: auto;
+    display: block;
+  }
+
+  #event-table thead {
+    display: none;
+  }
+
+  #event-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  #event-table tr {
+    display: block;
+    margin-bottom: 1rem;
+    background-color: rgba(0,13,51,0.6);
+    border-radius: 8px;
+  }
+}
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -1050,233 +1278,4 @@ section {
     margin: -20px 0 30px 0;
   }
 }
-.image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
 
-    .image-container img {
-        width: 100%;
-        height: auto;
-    }
-
-
-
-.discord-button {
-  background-color: #5865F2;
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: background 0.3s ease;
-}
-
-.discord-button:hover {
-  background-color: #4752c4;
-}
-
-.icon-wrapper {
-  position: relative;
-  width: 20px;
-  height: 20px;
-}
-
-.icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.icon.terminal {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.icon.discord {
-  opacity: 0;
-  transform: scale(0.5);
-}
-
-.discord-button:hover .icon.terminal {
-  opacity: 0;
-  transform: scale(0.5);
-}
-
-.discord-button:hover .icon.discord {
-  opacity: 1;
-  transform: scale(1);
-}
-
-
-/*--------------------------------------------------------------
-# Events Section
---------------------------------------------------------------*/
-.iframe-wrapper {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  border: 2px solid #2f4d5a;
-  margin-top: 20px;
-}
-
-.events h3 {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-#event-table {
-  background: rgba(47, 77, 90, 0.8); /* deep blue-green, matching #2f4d5a */
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 20px auto;
-  width: 90%;
-  max-width: 900px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  color: #fff;
-}
-
-#event-table th {
-  background-color: #ff00ff; /* KajSec magenta */
-  color: #fff;
-  font-weight: 700;
-  padding: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  text-align: left;
-}
-
-#event-table td {
-  background-color: rgba(0, 13, 51, 0.6); /* dark bluish transparent */
-  color: #ffffff;
-  padding: 16px;
-  text-align: left;
-}
-
-#event-table tr:not(:last-child) td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-#event-table td strong {
-  color: #8ec4dd; /* cyan highlight */
-}
-
-#event-table td em {
-  color: #67b0d1; /* alternate cyan */
-}
-}
-
-.mascot-img {
-  max-width: 10%;
-  height: 20%;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
-}
-
-}
-.icon-box {
-  background: #ffffff10;
-  backdrop-filter: blur(4px);
-  border-radius: 12px;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.icon-box:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-/* ================================
-   MOBILE OPTIMIZATION PATCH (≤768px)
-   ================================ */
-@media (max-width: 768px) {
-
-  /* Hero video: disable on mobile to save bandwidth */
-  #hero video {
-    display: none;
-  }
-
-  /* Reduce font sizes for readability */
-  h1, h2, h3 {
-    font-size: 1.5rem;
-  }
-
-  .loader-text {
-    font-size: 1rem;
-  }
-
-  /* Smaller icons */
-  .icon-box i {
-    font-size: 28px;
-  }
-
-  /* Simplify visual effects */
-  .icon-box {
-    backdrop-filter: none;
-    box-shadow: none;
-  }
-
-  /* Adjust mascot image */
-  .mascot-img {
-    max-width: 80%;
-    height: auto;
-  }
-
-  /* Disable Vanta.js background in preloader for mobile performance */
-  #vanta-bg-preloader {
-    display: none !important;
-  }
-
-  /* Disable backdrop blur if any */
-  .icon-box {
-    background: rgba(255, 255, 255, 0.05); /* fallback */
-  }
-
-  /* Hide unnecessary dropdowns or mega menus if they exist */
-  .navbar .dropdown ul,
-  .navbar .megamenu ul {
-    display: none !important;
-  }
-
-  /* Reduce header padding */
-  #header {
-    padding: 10px 0;
-  }
-
-  /* Fix mobile menu size */
-  .navbar-mobile ul {
-    top: 70px;
-    padding: 0;
-    font-size: 14px;
-  }
-
-  /* Event table: enable horizontal scrolling */
-  #event-table {
-    overflow-x: auto;
-    display: block;
-  }
-
-  #event-table thead {
-    display: none;
-  }
-
-  #event-table td {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-
-  #event-table tr {
-    display: block;
-    margin-bottom: 1rem;
-    background-color: rgba(0,13,51,0.6);
-    border-radius: 8px;
-  }
-}
