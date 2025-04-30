@@ -2,12 +2,13 @@ name: Update Events JSON
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # every day at 06:00 UTC
-  workflow_dispatch: # allows manual trigger
+    - cron: '*/5 * * * *'  # every 5 minutes
+  workflow_dispatch:       # manual trigger
 
 jobs:
   update-events:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,10 +23,11 @@ jobs:
 
       - name: Download and convert Google Sheets CSV to JSON
         run: |
-          curl -L -o sheet.csv "https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pubhtml?output=csv"
-          python -c "
+          curl -L -o sheet.csv "https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv"
+          python3 <<EOF
 import pandas as pd
 from datetime import datetime
+
 df = pd.read_csv('sheet.csv')
 df = df.dropna(subset=['Date'])
 df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
@@ -33,7 +35,7 @@ df = df[df['Date'] >= pd.to_datetime(datetime.now().date())]
 df = df.sort_values(by='Date')
 df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
 df.to_json('assets/data/events.json', orient='records', indent=2)
-"
+EOF
 
       - name: Commit and push changes
         run: |
