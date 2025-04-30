@@ -28,12 +28,13 @@ jobs:
           curl -L -o sheet.csv "https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv"
 
             echo "import pandas as pd" > convert.py
+            echo "from datetime import datetime" >> convert.py
             echo "print('Reading sheet.csv...')" >> convert.py
             echo "df = pd.read_csv('sheet.csv')" >> convert.py
             echo "print('Original rows:', len(df))" >> convert.py
-            echo "df = df.dropna(subset=['Date'])" >> convert.py
+            echo "df = df.dropna(how='all')" >> convert.py  # Drop only fully empty rows
             echo "df['Date'] = pd.to_datetime(df['Date'], errors='coerce')" >> convert.py
-            echo "df = df[df['Date'].notna()]" >> convert.py
+            echo "df = df[df['Date'].notna()]" >> convert.py  # Keep rows with valid dates
             echo "df = df.sort_values(by='Date')" >> convert.py
             echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M')" >> convert.py
             echo "print('Saving to events.json...')" >> convert.py
