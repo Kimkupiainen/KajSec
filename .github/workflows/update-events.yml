@@ -34,7 +34,7 @@ jobs:
           echo "df = df.sort_values(by='Date')" >> convert.py
           echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')" >> convert.py
           echo "df.to_json('assets/data/events.json', orient='records', indent=2)" >> convert.py
-
+          cat sheet.csv
           python convert.py
 
       - name: Commit and push changes
