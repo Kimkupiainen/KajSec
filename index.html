@@ -176,28 +176,38 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/matrix.js"</script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  
-
 <script>
   async function loadEvents() {
-    const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv");
-    const csv = await response.text();
-
-    const parsed = Papa.parse(csv, { header: true });
+    const response = await fetch('assets/data/events.json');
+    const events = await response.json();
     const tbody = document.querySelector('#event-table tbody');
 
-    parsed.data.forEach(row => {
-      if (!row['Date']) return; // Skip empty rows
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${row['Date']}</td>
-        <td>${row['Event Name']}</td>
-        <td>${row['Location']}</td>
-        <td>${row['Description']}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+    const today = new Date();
+    const upcoming = events
+      .filter(event => new Date(event.Date) >= today)
+      .sort((a, b) => new Date(a.Date) - new Date(b.Date));
+
+    if (upcoming.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4">No upcoming events found.</td></tr>';
+    } else {
+      upcoming.forEach(event => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${event["Date"]}</td>
+          <td>${event["Event Name"]}</td>
+          <td>${event["Location"]}</td>
+          <td>${renderMarkdown(event["Description"])}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  }
+
+  // Simple markdown parser: **bold**, *italic*
+  function renderMarkdown(text = '') {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>');
   }
 
   document.addEventListener('DOMContentLoaded', loadEvents);

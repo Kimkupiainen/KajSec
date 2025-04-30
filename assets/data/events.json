@@ -1,0 +1,20 @@
+[
+  {
+    "Date": "2025-05-10",
+    "Event Name": "Monthly Meetup",
+    "Location": "Kajaani HUB",
+    "Description": "Grab pizza and listen to lightning talks on *Wireshark* and **threat modeling**."
+  },
+  {
+    "Date": "2025-06-01",
+    "Event Name": "CTF Training",
+    "Location": "Online (Discord)",
+    "Description": "Join us for a walkthrough on solving **web-based CTFs**."
+  },
+  {
+    "Date": "2024-12-01",
+    "Event Name": "Old Event",
+    "Location": "Somewhere",
+    "Description": "This will be filtered out."
+  }
+]
