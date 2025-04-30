@@ -198,19 +198,28 @@
     const events = await response.json();
     const tbody = document.querySelector('#event-table tbody');
 
-	const todayISO = new Date().toISOString().split("T")[0]; // e.g. 2025-05-04
+    const now = new Date();
 
-	const upcoming = events
-	  .filter(event => event.Date >= todayISO)
-	  .sort((a, b) => a.Date.localeCompare(b.Date));
+    const upcoming = events
+      .filter(event => {
+        const dateTimeString = event.Date + (event.Time ? 'T' + event.Time : 'T00:00');
+        const eventDateTime = new Date(dateTimeString);
+        return eventDateTime >= now;
+      })
+      .sort((a, b) => {
+        const aDate = new Date(a.Date + (a.Time ? 'T' + a.Time : 'T00:00'));
+        const bDate = new Date(b.Date + (b.Time ? 'T' + b.Time : 'T00:00'));
+        return aDate - bDate;
+      });
 
     if (upcoming.length === 0) {
       tbody.innerHTML = '<tr><td colspan="4">No upcoming events found.</td></tr>';
     } else {
       upcoming.forEach(event => {
+        const time = event.Time ? ` ${event.Time}` : '';
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${event["Date"]}</td>
+          <td>${event.Date}${time}</td>
           <td>${event["Event Name"]}</td>
           <td>${event["Location"]}</td>
           <td>${renderMarkdown(event["Description"])}</td>
@@ -229,6 +238,7 @@
 
   document.addEventListener('DOMContentLoaded', loadEvents);
 </script>
+
 
 
 
