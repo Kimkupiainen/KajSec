@@ -157,7 +157,7 @@
 
               <div class="text-center">
                   <h3>Contact</h3>
-                  <p>Contact Mattermost CitySec: Kajsec <br>Email: info[at]kajsec.fi<br><br>
+                  <p>Contact Mattermost CitySec: Kajsec <br><p id="email-display">Email: [loading...]</p><br><br>
 					<a href="https://discord.gg/wHaa2PrbJM" class="btn btn-primary discord-button" target="_blank" rel="noopener">
 					  <span class="icon-wrapper">
 						<svg class="icon terminal" xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24" fill="white">
@@ -354,7 +354,14 @@
     loader.textContent = percent;
   }, 80);
 </script>
-
+<script>
+  const name = 'info';
+  const site = 'kajsec.fi';
+  const obfuscated = `${name} [at] ${site}`;
+  const mail = `${name}@${site}`;
+  document.getElementById('email-display').innerHTML =
+    `Email: <a href="mailto:${mail}">${obfuscated}</a>`;
+</script>
 
 </body>
 
