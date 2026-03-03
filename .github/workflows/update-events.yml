@@ -1,10 +1,10 @@
 name: Update Events JSON
 permissions:
   contents: write
-  
+
 on:
   schedule:
-    - cron: '* 24 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
@@ -15,35 +15,46 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: python -m pip install pandas
-
-      - name: Download and convert Google Sheets CSV to JSON
+      - name: Download Google Sheets CSV
         run: |
           curl -L -o sheet.csv "https://docs.google.com/spreadsheets/d/e/2PACX-1vRj1ph9bBAsVVOoTruj-mYznqVPoFl8RpTK4ng5SPXBe00-N7DUrxsW3Vh_Nv0W2Xl-4PscSzpVXrzY/pub?output=csv"
 
-            echo "import pandas as pd" > convert.py
-            echo "from datetime import datetime" >> convert.py
-            echo "print('Reading sheet.csv...')" >> convert.py
-            echo "df = pd.read_csv('sheet.csv')" >> convert.py
-            cat sheet.csv
-            echo "print('Original rows:', len(df))" >> convert.py
-            echo "df = df.dropna(how='all')" >> convert.py  # Drop only fully empty rows
-            echo "df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')" >> convert.py
-            echo "df = df[df['Date'].notna()]" >> convert.py  # Keep rows with valid dates
-            echo "df = df.sort_values(by='Date')" >> convert.py
-            echo "df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M')" >> convert.py
-            echo "print('Saving to events.json...')" >> convert.py
-            echo "df.to_json('assets/data/events.json', orient='records', indent=2)" >> convert.py
-            echo "print('Done.')" >> convert.py
-            echo "print(df.to_string())" >> convert.py
+      - name: Convert CSV to JSON
+        run: |
+          python3 << 'EOF'
+          import csv
+          import json
+          from datetime import datetime
 
-          python convert.py
+          FORMATS = ['%d.%m.%Y %H:%M', '%Y-%m-%d %H:%M', '%d/%m/%Y %H:%M', '%d.%m.%Y']
+
+          def parse_date(value):
+              for fmt in FORMATS:
+                  try:
+                      return datetime.strptime(value.strip(), fmt)
+                  except ValueError:
+                      continue
+              return None
+
+          events = []
+          with open('sheet.csv', newline='', encoding='utf-8') as f:
+              for row in csv.DictReader(f):
+                  if not any(row.values()):
+                      continue
+                  dt = parse_date(row.get('Date', ''))
+                  if dt is None:
+                      continue
+                  row['Date'] = dt.strftime('%Y-%m-%d %H:%M')
+                  events.append(row)
+
+          events.sort(key=lambda x: x['Date'])
+          print(f'Saving {len(events)} events to events.json...')
+
+          with open('assets/data/events.json', 'w', encoding='utf-8') as f:
+              json.dump(events, f, indent=2, ensure_ascii=False)
+
+          print('Done.')
+          EOF
 
       - name: Commit and push changes
         run: |
